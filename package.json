@@ -2,6 +2,7 @@
   "name": "react19-study",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kkahub.github.io/react19-study/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
