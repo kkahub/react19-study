@@ -22,12 +22,15 @@ function Card({ isShow }) {
 }
 
 export default function Container() {
-  useEffect(() => {
-    const listItems = document.querySelectorAll('li');
-    console.log(listItems.length); // 1
-  }, []);
   return (
-    <div className="container">
+    <div id="container">
+      <a
+        className="github"
+        href="https://github.com/kkahub/react19-study?tab=readme-ov-file"
+        target="_blank"
+      >
+        github링크 ⨠
+      </a>
       <h2>Keeping Components Pure</h2>
       <details>
         <summary>StrickMode</summary>
