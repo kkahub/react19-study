@@ -76,6 +76,14 @@ xmp {
 ul > li > pre {
   margin: 8px 0 15px;
 }
+.tip {
+  overflow-x: auto;
+  margin: 8px 0 15px;
+  padding: 10px;
+  border-radius: 7px;
+  background: #eee;
+  color: #555;
+}
 a {
   color: cornflowerblue;
 }

@@ -64,7 +64,7 @@ export default function Container() {
             <li>use가 붙는 함수 Hooks는 렌더링하는 동안만 사용</li>
             <li>
               Hooks는 최상위 수준(Top level)에서만 호출
-              <br />이 규칙을 지킬 경우 항상 안전하게 동일한 순서로 호출
+              <br />이 규칙을 지킬 경우 항상 안전하게 동일한 순서로 호출 됨
             </li>
           </ul>
         </div>
@@ -141,6 +141,55 @@ export default function Container() {
               </div>
             </li>
           </ul>
+        </div>
+      </details>
+
+      <h2>Updating Arrays in State</h2>
+      <details>
+        <summary>state의 변형 방지</summary>
+        <div class="desc_wrap">
+          <ul>
+            <li>배열을 변형하지 말고 새로운 배열을 반환하는 방법을 사용해야함</li>
+            <li>
+              <strong>❌ 사용금지방법</strong>
+              <div className="tip">
+                push, unshift, splice, pop, shift, sort, reverse, arr[i] = ...
+              </div>
+            </li>
+            <li>
+              <strong>✔️ 사용권장방법</strong>
+              <div className="tip">[...arr], concat, slice, filter, map, copy array</div>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <h2>Choosing the State Structure</h2>
+      <details>
+        <summary>state 원칙</summary>
+        <div class="desc_wrap">
+          <ol>
+            <li>state는 최대한 단순하게 유지</li>
+            <li>마우스의 x, y 값과 같이 동시에 변경될 경우 객체로 묶어 관리</li>
+            <li>
+              state끼리 모순되지 않는지 검토 필요
+              <div className="tip">
+                form을 보낼 때 state isSending, isSent가 모두 true일 수 없음
+                <br />→ status변수로 정하고 값을 sending, sent로 변경하며 관리하는 방식이 좋음
+              </div>
+            </li>
+            <li>
+              중복되지 않게 주의
+              <div className="tip">
+                firstName, lastName, fullName
+                <br />
+                fullName은 firstName + lastName으로 가능
+              </div>
+            </li>
+            <li>내려받은 props를 다시 state로 쓰지 않기</li>
+            <li>state의 state를 만들지 않기(중복, 업데이트 안됨)</li>
+            <li>깊은 중첩 객체 state 만들지 않기</li>
+          </ol>
         </div>
       </details>
     </div>
