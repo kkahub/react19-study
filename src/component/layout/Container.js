@@ -28,6 +28,7 @@ export default function Container() {
         className="github"
         href="https://github.com/kkahub/react19-study?tab=readme-ov-file"
         target="_blank"
+        rel="noreferrer"
       >
         github링크 ⨠
       </a>
@@ -43,7 +44,7 @@ export default function Container() {
               component를 두 번 호출하는 "StrickMode"로 규칙을 어기는 구성 요소를 찾음
               <div class="code">
                 <xmp>
-                  <span className="gry">// index.js</span>
+                  <span className="gry">{'//'} index.js</span>
                   {`\n`}
                   {`<React.StrictMode> 
   <App />
@@ -189,6 +190,91 @@ export default function Container() {
             <li>내려받은 props를 다시 state로 쓰지 않기</li>
             <li>state의 state를 만들지 않기(중복, 업데이트 안됨)</li>
             <li>깊은 중첩 객체 state 만들지 않기</li>
+          </ol>
+        </div>
+      </details>
+
+      <h2>Preserving and Resetting State</h2>
+      <details>
+        <summary>state 보존과 리셋</summary>
+        <div class="desc_wrap">
+          <ol>
+            <li>
+              state는 React가 state를 각각 컴포넌트에 연결해주고 컴포넌트가 렌더링 됨.
+              <br />
+              UI트리가 다르면 서로에게 영향을 미치지 않음
+              <div className="tip">
+                div → Counter / Counter UI트리 구조이며 Counter는 각자 다른 위치에서 두개가 랜더링
+                됨.
+                <br />
+                안에 있는 state는 서로 영향을 미치지 않고 따로 카운터 됨
+                <div className="code">
+                  <xmp>
+                    {`<div>
+  <Counter />
+  <Counter />
+</div>`}
+                  </xmp>
+                </div>
+              </div>
+            </li>
+            <li>
+              리셋 : 조건문 같은 것으로 컴포넌트를 제거하면 state는 파괴되어 리셋 됨
+              <div className="tip">
+                isShow state로 두번째 Counter를 없애면 두번째 Counter만 리셋 됨
+                <div className="code">
+                  <xmp>
+                    {`<div>
+  <Counter />
+  {isShow && <Counter />}
+</div>`}
+                  </xmp>
+                </div>
+              </div>
+            </li>
+            <li>
+              동일한 트리 위치(구조)에 있는 컴포넌트는 유지됨
+              <div className="tip">
+                예시{`)`} Counter 한개를 true, false로 변경할 뿐 동일한 위치
+                <div className="code">
+                  <xmp>
+                    {`<div>
+  {isFancy ? (
+    <Counter isFancy={true} /> 
+  ) : (
+    <Counter isFancy={false} /> 
+  )}
+</div>`}
+                  </xmp>
+                </div>
+                <br />
+                예시{`)`} div, section으로 같은 위치에 다른 요소로 렌더링하면 서브트리 state가
+                재설정 됨
+                <div className="code">
+                  <xmp>
+                    {`<div>
+  {isFancy ? (`}
+                    <br />
+                    <span className="org">{`    <div>`}</span>
+                    {`
+      <Counter isFancy={true} />`}
+                    <br />
+                    <span className="org">{`    </div>`}</span>
+                    {`
+  ) : (`}
+                    <br />
+                    <span className="org">{`    <section>`}</span>
+                    {`
+      <Counter isFancy={false} />`}
+                    <br />
+                    <span className="org">{`    </section>`}</span>
+                    {`
+  )}
+</div>`}
+                  </xmp>
+                </div>
+              </div>
+            </li>
           </ol>
         </div>
       </details>
