@@ -1,7 +1,7 @@
-export function Card({ title, subTitle, children }) {
+export function Card({ title='', subTitle, children }) {
   return (
     <>
-      <h2>{ title }</h2>
+      {title !=='' && <h2>{title}</h2>}
       <details>
         <summary>{subTitle}</summary>
         <div className="desc_wrap">
@@ -299,18 +299,19 @@ onClick={() => {
           </ul>
       </Card>
 
-      <Card title="Passing Data Deeply with Context" subTitle="context로 state 전역관리">
-        <ul>
-          <li>
-            Provider로 감싸주고 value 값을 주면 그 하위 컴포넌트 안에서 전역으로 사용
-            <div className="code">
-              <xmp>
-                {`<LevelContext.Provider value={level}>
+      <Card title="Passing Data Deeply with Context" subTitle="context로 범위 지정하여 저장하기">
+        Provider로 감싸주고 value 값을 주면 그 하위 컴포넌트 안에서 전역으로 사용
+        <div className="code">
+          <xmp>
+            {`<LevelContext.Provider value={level}>
   {children}
 </LevelContext.Provider>`}
-              </xmp>
-            </div>
-          </li>
+          </xmp>
+        </div>
+      </Card>
+
+      <Card subTitle="context 사용방법">
+        <ul>
           <li>
             Consumer로 접근
             <div className="code">
@@ -321,9 +322,47 @@ onClick={() => {
               </xmp>
             </div>
           </li>
-          <li>useContext로 접근</li>
-          <li>contextType로 접근</li>
+          <li>
+            useContext로 접근
+            <div className="code">
+              <xmp>
+                {`import React, { useContext } from "react";
+import LangContext from "./LangContext";
+
+function Button() {
+  const lang = useContext(LangContext);
+  return <button>{lang}</button>;
+}`}
+              </xmp>
+            </div>
+          </li>
+          <li>
+            contextType로 접근
+            <div className="code">
+              <xmp>               
+                {`import React, { Component } from "react";
+import LangContext from "./LangContext";
+
+class Message extends Component {
+  static contextType = LangContext;
+  render() {
+    const lang = this.context;
+    return <p>{lang}</p>;
+  }
+}
+`}
+              </xmp>
+            </div>
+          </li>
         </ul>
+      </Card>
+
+      <Card title="Scaling Up with Reducer and Context" subTitle="부제목">
+        
+      </Card>
+
+      <Card title="제목" subTitle="부제목">
+        
       </Card>
 
       <Card title="제목" subTitle="부제목">
