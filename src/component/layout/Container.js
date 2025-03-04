@@ -1,12 +1,10 @@
-export function Card({ title='', subTitle, children }) {
+export function Card({ title = '', subTitle, children }) {
   return (
     <>
-      {title !=='' && <h2>{title}</h2>}
+      {title !== '' && <h2>{title}</h2>}
       <details>
         <summary>{subTitle}</summary>
-        <div className="desc_wrap">
-          {children}
-        </div>
+        <div className="desc_wrap">{children}</div>
       </details>
     </>
   );
@@ -93,13 +91,16 @@ export default function Container() {
             </div>
           </li>
           <li>
-            이런 snapshot 처럼 작동하는 state는 이벤트 핸들러 안에서 setTimeout을 사용해
-            인위적으로 이벤트를 지연시키고 그 사이 상태값을 바꿔도 값이 고정되 바뀌지 않는다.
+            이런 snapshot 처럼 작동하는 state는 이벤트 핸들러 안에서 setTimeout을 사용해 인위적으로
+            이벤트를 지연시키고 그 사이 상태값을 바꿔도 값이 고정되 바뀌지 않는다.
           </li>
         </ul>
       </Card>
 
-      <Card title="Queueing a Series of State Updates" subTitle="state의 렌더링 전에 여러번 업데이트">
+      <Card
+        title="Queueing a Series of State Updates"
+        subTitle="state의 렌더링 전에 여러번 업데이트"
+      >
         <ul>
           <li>
             함수는 업데이터 함수로 여기고 다음 큐에 추가하고 추가하며 최종 업데이트된 상태를 다음
@@ -169,8 +170,7 @@ onClick={() => {
             <br />
             <strong>UI트리 위치</strong>가 다르면 서로에게 영향을 미치지 않음
             <div className="tip">
-              div → Counter / Counter UI트리 구조이며 Counter는 각자 다른 위치에서 두개가 랜더링
-              됨.
+              div → Counter / Counter UI트리 구조이며 Counter는 각자 다른 위치에서 두개가 랜더링 됨.
               <br />
               안에 있는 state는 서로 영향을 미치지 않고 따로 카운터 됨
               <div className="code">
@@ -217,8 +217,8 @@ onClick={() => {
           <li>
             동일한 UI트리 위치에 div {`->`} section으로 변경되면서 다시 렌더링
             <div className="tip">
-              예시{`)`} div, section으로 같은 위치에 다른 요소로 렌더링하면 서브트리 state가
-              재설정 됨
+              예시{`)`} div, section으로 같은 위치에 다른 요소로 렌더링하면 서브트리 state가 재설정
+              됨
               <div className="code">
                 <xmp>
                   {`<div>
@@ -279,24 +279,32 @@ onClick={() => {
 
       <Card title="Extracting State Logic into a Reducer" subTitle="useReducer 잘 사용하기">
         <ul>
-            <li>컴포넌트 외부에 state 업데이트 로직이 존재</li>
-            <li>관리해야 할 연관된 state가 여러개 또는 복잡할 때</li>
-            <li>스케일이 큰 프로젝트</li>
-            <li>다른 파일로 state 업데이트 관리하고 싶을 때</li>
-          </ul>
-          
-          <div className="code">
-            <xmp>
-              {`const [state, dispatch] = useReducer(reducer, initialState, init);`}
-            </xmp>
-          </div>
-          <ul>
-            <li><strong>state :</strong> 상태</li>
-            <li><strong>dispatch :</strong> state 업데이트 action 함수</li>
-            <li><strong>reducer :</strong> state 업데이트 로직 함수(switch문을 많이 사용)</li>
-            <li><strong>initialState :</strong> 초기 state</li>
-            <li><strong>init :</strong> 초기 함수</li>
-          </ul>
+          <li>컴포넌트 외부에 state 업데이트 로직이 존재</li>
+          <li>관리해야 할 연관된 state가 여러개 또는 복잡할 때</li>
+          <li>스케일이 큰 프로젝트</li>
+          <li>다른 파일로 state 업데이트 관리하고 싶을 때</li>
+        </ul>
+
+        <div className="code">
+          <xmp>{`const [state, dispatch] = useReducer(reducer, initialState, init);`}</xmp>
+        </div>
+        <ul>
+          <li>
+            <strong>state :</strong> 상태
+          </li>
+          <li>
+            <strong>dispatch :</strong> state 업데이트 action 함수
+          </li>
+          <li>
+            <strong>reducer :</strong> state 업데이트 로직 함수(switch문을 많이 사용)
+          </li>
+          <li>
+            <strong>initialState :</strong> 초기 state
+          </li>
+          <li>
+            <strong>init :</strong> 초기 함수
+          </li>
+        </ul>
       </Card>
 
       <Card title="Passing Data Deeply with Context" subTitle="context로 범위 지정하여 저장하기">
@@ -339,7 +347,7 @@ function Button() {
           <li>
             contextType로 접근
             <div className="code">
-              <xmp>               
+              <xmp>
                 {`import React, { Component } from "react";
 import LangContext from "./LangContext";
 
@@ -355,19 +363,103 @@ class Message extends Component {
             </div>
           </li>
         </ul>
+        <p>* 복잡하거나 자주 변하는 값은 redux, jotai, zustand 사용 권장</p>
       </Card>
 
       <Card title="Scaling Up with Reducer and Context" subTitle="부제목">
-        
+        <ol>
+          <li>
+            context와 전송기능 dispatch를 createContext로 만듬
+            <div className="code">
+              <xmp>
+                <span className="gry">{`// TaskContext.js`}</span>
+                {`
+export const taskContent = createContext(null);
+export const taskDispatchContext = createContext(null);
+`}
+              </xmp>
+            </div>
+          </li>
+          <li>
+            reducer를 만들고 각각 provider와 매칭해주기
+            <div className="code">
+              <xmp>
+                <span className="gry">{`// TaskContext.js`}</span>
+                <br />
+                {`export const taskContent = createContext(null);
+export const taskDispatchContext = createContext(null);
+
+export function TasksProvider({ children }) {
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+
+  return (
+    <TasksContext.Provider value={tasks}>
+      <TasksDispatchContext.Provider value={dispatch}>
+        {children}
+      </TasksDispatchContext.Provider>
+    </TasksContext.Provider>
+  );
+}`}
+              </xmp>
+            </div>
+          </li>
+          <li>
+            <ul>
+              <li>
+                원하는 하위 트리에서 context 사용
+                <div className="code">
+                  <xmp>
+                    {`export default function TaskList() {
+  const tasks = useContext(TasksContext);
+}`}
+                  </xmp>
+                </div>
+              </li>
+              <li>
+                원하는 하위 트리에서 업데이트 dispatch 사용
+                <div className="code">
+                  <xmp>
+                    {`const dispatch = useContext(TasksDispatchContext);
+
+return (
+  <button onClick={() => {
+    setText('');
+    dispatch({
+      type: 'added',
+      id: nextId++,
+      text: text,
+    });
+  }}>Add</button>
+)`}
+                  </xmp>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ol>
       </Card>
 
-      <Card title="제목" subTitle="부제목">
-        
+      <Card title="Referencing Values with Refs" subTitle="refs가 state와 다른 점">
+        <ul>
+          <li>변경해도 렌더링 없음</li>
+          <li>current 값 변경 및 업데이트 가능</li>
+          <li>렌더링 중에는 읽거나 쓰면 안됨.</li>
+          <li>값을 바꾸면 즉시 바뀜. 스냅샷 특성 없음</li>
+        </ul>
       </Card>
 
-      <Card title="제목" subTitle="부제목">
-        
+      <Card subTitle="refs의 적합한 사용">
+        <ul>
+          <li>타임아웃 ID를 저장</li>
+          <li>DOM elements에 저장 및 조작</li>
+          <li>JSX를 계산하는데 필수적이지 않은 오브젝트를 저장</li>
+        </ul>
+        <p>* 어떤 값을 저장해야 하지만 렌더링과 연관이 없을 때 사용 적합</p>
       </Card>
+
+      <Card title="제목" subTitle="부제목"></Card>
+      <Card title="제목" subTitle="부제목"></Card>
+      <Card title="제목" subTitle="부제목"></Card>
     </div>
   );
 }
