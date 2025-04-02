@@ -318,7 +318,7 @@ onClick={() => {
         </div>
       </Card>
 
-      <Card subTitle="context 사용방법">
+      <Card subTitle="context 접근방법">
         <ul>
           <li>
             Consumer로 접근
@@ -366,7 +366,7 @@ class Message extends Component {
         <p>* 복잡하거나 자주 변하는 값은 redux, jotai, zustand 사용 권장</p>
       </Card>
 
-      <Card title="Scaling Up with Reducer and Context" subTitle="부제목">
+      <Card title="Scaling Up with Reducer and Context" subTitle="사용법">
         <ol>
           <li>
             context와 전송기능 dispatch를 createContext로 만듬
@@ -457,6 +457,77 @@ return (
         <p>* 어떤 값을 저장해야 하지만 렌더링과 연관이 없을 때 사용 적합</p>
       </Card>
 
+      <Card title="Manipulating the DOM with Refs" subTitle="Ref Callback">
+        <ul>
+          <li>ref는 컴포넌트 렌더링 후 실행되는 함수</li>
+          <li>
+            DOM node를 인자로 받고 컴포넌트 언마운트 될 때 한번 더 호출되어 null을 인자로 받음 *
+            useEffect를 사용할 필요 없음
+          </li>
+          <li>
+            useEffect를 사용했다면
+            <div className="code">
+              <xmp>
+                {`const ref = useRef(null)
+
+useEffect(() => {
+  ref.current?.focus()
+}, [])
+
+return (
+  <form>
+    <input ref={ref} />
+  </form>
+)
+`}
+              </xmp>
+            </div>
+          </li>
+          <li>
+            Ref Callback으로 한다면
+            <div className="code">
+              <xmp>
+                {`const ref = (node) => node?.focus()
+
+return (
+  <form>
+    <input ref={ref} />
+  </form>
+)
+`}
+              </xmp>
+            </div>
+          </li>
+          <li>
+            useCallback으로 최적화 한다면
+            <div className="code">
+              <xmp>
+                {`const ref = React.useCallback((node) => node?.focus(), [])
+
+return (
+  <form>
+    <input ref={ref} />
+  </form>
+)
+`}
+              </xmp>
+            </div>
+          </li>
+        </ul>
+      </Card>
+
+      <Card title="Synchronizing with Effects" subTitle="useEffect와 Event의 차이점">
+        <ul>
+          <li>useEffect는 특정 이벤트가 아닌 렌더링 발생 시 컨트롤 할 수 있음.</li>
+          <li>
+            서버를 연결 설정은 Effect로 이벤트와 상관이 없이 일어나야 함.
+            <br />
+            API, 타사 위젯, 네트워크와 같은 외부 시스템 동기화에 사용
+          </li>
+        </ul>
+      </Card>
+
+      <Card title="제목" subTitle="부제목"></Card>
       <Card title="제목" subTitle="부제목"></Card>
       <Card title="제목" subTitle="부제목"></Card>
       <Card title="제목" subTitle="부제목"></Card>
